@@ -23,6 +23,24 @@ class ServerPayload {
       administrador: "true",
     };
   }
+
+ registerProduct() {
+  const nome = faker.commerce.productName();
+  const preco = faker.number.int({ min: 10, max: 1000 });
+  const descricao = faker.commerce.productDescription();
+  const quantidade = faker.number.int({ min: 1, max: 100 });
+
+  const payload = {
+    nome,
+    preco,
+    descricao,
+    quantidade
+  };
+  this.storageData = this.storageData || {};
+  this.storageData.product = payload;
+  return payload;
+}
+
 }
 
 export default ServerPayload;

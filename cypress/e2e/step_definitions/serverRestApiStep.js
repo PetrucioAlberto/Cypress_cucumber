@@ -5,6 +5,7 @@ const service = new serverRestServicePage();
 
 Given(`que acesso a api {string}`, (url) => {
     service.setBaseUrl(url);
+    return service.captureToken();
 });
 
 When(`realizo uma request POST para {string}`, (endpoint) => {
@@ -13,4 +14,12 @@ When(`realizo uma request POST para {string}`, (endpoint) => {
 
 Then(`eu valido a resposta do cadastro realizado`, () => {
     service.validateRegistrationResponse();
+});
+
+When(`realizo uma request para cadastrar o produto {string}`, (endpoint) => {
+    service.sendPostResquestToRegisterProduct(endpoint);
+});
+
+Then(`eu valido a resposta do cadastro de produto realizado`, () => {
+    service.validateProductCreationResponse();
 });
