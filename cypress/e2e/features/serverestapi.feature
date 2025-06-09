@@ -15,3 +15,12 @@ Feature: Serverest - Gestao de Usuarios e Produtos
     Examples:
       | url                   | endpoint |
       | https://serverest.dev/| /produtos|
+
+  Scenario Outline: Listar produtos
+  Given que acesso a api '<url>'
+  When realizo uma request para listar os produtos '<endpoint>'
+  Then valido a resposta da listagem de produtos
+
+  Examples:
+    | url                   | endpoint   |
+    | https://serverest.dev/ | /produtos  |

@@ -92,13 +92,45 @@ class ServerRestPage {
     });
   }
   validateProductCreationResponse() {
-    cy.log('validate product response');
+    cy.log("validate product response");
     const response = this.storageData.response;
     expect(response.status).to.eq(201);
-    expect(response.body).to.have.property('message', 'Cadastro realizado com sucesso');
-    expect(response.body).to.have.property('_id').and.to.be.a('string').and.not.be.empty;
+    expect(response.body).to.have.property(
+      "message",
+      "Cadastro realizado com sucesso"
+    );
+    expect(response.body).to.have.property("_id").and.to.be.a("string").and.not
+      .be.empty;
     this.storageData.productId = response.body._id;
-}
+  }
 
+  sendGetRequestToListProducts(endpoint) {
+    cy.log("Send GET request to list products");
+    return cy
+      .request({
+        method: "GET",
+        url: `${this.baseUrl}${endpoint}`,
+      })
+      .then((response) => {
+        this.storageData.response = response;
+        cy.log(`Status: ${response.status}`);
+      });
+  }
+
+  validateListProductsResponse() {
+    const response = this.storageData.response;
+    cy.log("validate list products");
+    expect(response.status).to.eq(200);
+    expect(response.body).to.have.property("produtos").and.to.be.an("array");
+    if (response.body.produtos.length > 0) {
+      cy.log(JSON.stringify(response.body.produtos[0]));
+      expect(response.body.produtos[0]).to.include.all.keys(
+        "nome",
+        "preco",
+        "descricao",
+        "quantidade"
+      );
+    }
+  }
 }
 export default ServerRestPage;

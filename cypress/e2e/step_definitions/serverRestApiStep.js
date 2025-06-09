@@ -23,3 +23,11 @@ When(`realizo uma request para cadastrar o produto {string}`, (endpoint) => {
 Then(`eu valido a resposta do cadastro de produto realizado`, () => {
     service.validateProductCreationResponse();
 });
+
+When(`realizo uma request para listar os produtos {string}`, (endpoint) => {
+    service.sendGetRequestToListProducts(endpoint);
+});
+
+Then(`valido a resposta da listagem de produtos`, () => {
+   service.validateListProductsResponse();
+});
