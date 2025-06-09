@@ -3,9 +3,9 @@ Feature: Serverest - Gestao de Usuarios e Produtos
   Scenario Outline: Login e validacao na lista de usuarios
     Given que acesso a homePage
     And realizo o cadastro inicial de adm '<name>' '<email>' '<password>'
-    And devo ser redirecionado para o dashboard
+    When devo ser redirecionado para o dashboard
     And acessar a página de listagem de usuarios
-    Then devo validar que o usuario '<email>' esta presente na lista
+    Then devo validar que o usuario esta presente na lista
 
     Examples:
       | name  | email           | password |

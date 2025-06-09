@@ -14,26 +14,10 @@ class ServerRestPage {
     cy.visit(url); 
   }
 
-  generateUniqueSuffix() {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000);
-    return `${timestamp}${random}`;
-  }
-
-  addFakeSuffix(value) {
-    if (!value) return value;
-    const suffix = this.generateUniqueSuffix();
-    if (value.includes('@')) {
-      const [localPart, domain] = value.split('@');
-      return `${localPart}${suffix}@${domain}`;
-    }
-    return `${value}${suffix}`;
-  }
-
   registerUser(name, email, password) {
-    const fakeName = this.addFakeSuffix(name);
-    const fakeEmail = this.addFakeSuffix(email);
-    const fakePassword = this.addFakeSuffix(password);
+    const fakeName = faker.person.fullName();
+    const fakeEmail = faker.internet.email();
+    const fakePassword = faker.internet.password();
     this.storageData.user = {
       name: fakeName,
       email: fakeEmail,
@@ -52,13 +36,55 @@ class ServerRestPage {
     });
   }
 
-  realizeLoginWithEmailAndPassword(email, password){
-    cy.log('realizar login');
+  validateDashboard(){
+    cy.log('Dashboard');
+    cy.xpath(serverElements.msgEsteESeuSistema(),{timeout:7000}).should('be.visible').then(()=>{
+      cy.xpath(serverElements.cardCadastrarUser()).should('be.visible');
+      cy.get(serverElements.btnCadastrarUser()).should('be.visible');
+
+      cy.xpath(serverElements.cardListarUser()).should('be.visible');
+      cy.get(serverElements.btnListarUser()).should('be.visible');
+
+      cy.xpath(serverElements.cardCadastrarProdutos()).should('be.visible');
+      cy.get(serverElements.btncadastrarProdutos()).should('be.visible');
+
+      cy.xpath(serverElements.cardListarProdutos()).should('be.visible');
+      cy.get(serverElements.btnListarProdutos()).should('be.visible');
+
+      cy.xpath(serverElements.cardRelatorios()).should('be.visible');
+      cy.get(serverElements.btnVerRelatorios()).should('be.visible');
+    });
+  }
+  accessUserListingPage(){
+    cy.log('access user listing page');
+    cy.xpath(serverElements.cardListarUser(), {timeout:6000}).should('be.visible');
+    cy.get(serverElements.btnListarUser()).should('be.visible').click();
+  }
+
+  validateUserListingPage() {
+    cy.log('Validate User Listing Page');
+    const expectedEmail = this.storageData.user.email;
+    cy.xpath(serverElements.titleListaDosUsuarios(), { timeout: 6000 }).should('be.visible');
+    let emailFound = false;
+    cy.get('tbody tr').each(($row) => {
+      const email = Cypress.$($row).find('td').eq(1).text().trim();
+      if (email === expectedEmail) {
+        emailFound = true;
+      }
+    }).then(() => {
+      expect(emailFound, `Email ${expectedEmail} should be listed`).to.be.true;
+    });
+  }
+
+
+
+  
+  loginWithEmailAndPassword(email, password){
+    cy.log('login');
     cy.get(serverElements.digiteSeuEmail()).should('be.visible').type(email);
     cy.get(serverElements.digiteSuaSenha).should('be.visible').type(password);
     cy.xpath(serverElements.btnEnter()).should('be.visible').click();
   }
-
 }
 
 export default ServerRestPage;
