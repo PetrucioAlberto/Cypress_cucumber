@@ -9,7 +9,7 @@ class ServerElements {
   //login
   inputEmail() {return '#email'};
   inputPass() {return '#password'};
-  btnEnter() {return 'button[type="submit"]'};
+  btnEnter() {return '[data-testid="entrar"]'};
   //homepage
   msgEsteESeuSistema(){return "//p[contains(text(),'Este é seu sistema para administrar seu ecommerce.')]"};
   //cardOne
@@ -29,8 +29,18 @@ class ServerElements {
   btnVerRelatorios(){return '[data-testid="relatorios"]'};
 
   //userlisting
-  titleListaDosUsuarios(){return "//h1[contains(text(),'Lista dos usuários')]"}
-  
+  titleListaDosUsuarios(){return "//h1[contains(text(),'Lista dos usuários')]"};
+
+  //register products
+  titleCadastroDeProdutos(){return "//h1[contains(text(),'Cadastro de Produtos')]"}
+  nomeDoProduto(){return '#nome'};
+  preco(){return '#price'};
+  descricao(){return '#description'};
+  quantidade(){return '#quantity'};
+  imagem(){return '#imagem'};
+  btnCadastrarProdutoDescrito(){return '[data-testid="cadastarProdutos"]'}
+  //products list
+  titleListaDeProdutos(){return "//h1[contains(text(),'Lista dos Produtos')]"}
 
 
 }

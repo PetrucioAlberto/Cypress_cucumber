@@ -23,7 +23,19 @@ Then(`devo validar que o usuario esta presente na lista`, () => {
   serverest.validateUserListingPage();
 });
 
+When(`eu faço login com email e senha {string} {string}`, (email, password) => {
+  serverest.loginWithEmailAndPassword(email, password);
+});
 
-// When(`eu faço login com email e senha {string} {string}`, (email, password) => {
-//   serverest.loginWithEmailAndPassword(email, password);
-// });
+When(`acesso a página de cadastro de produtos`, () => {
+  serverest.accessProductRegistrationPage();
+});
+
+When(`cadastro um produto com nome preco e descricao`, () => {
+  serverest.productRegistration();
+});
+
+Then(`devo validar que o produto está presente na lista`, () => {
+  serverest.validateProductList();
+});
+

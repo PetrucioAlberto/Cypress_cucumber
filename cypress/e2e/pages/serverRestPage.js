@@ -76,15 +76,63 @@ class ServerRestPage {
     });
   }
 
-
-
-  
   loginWithEmailAndPassword(email, password){
     cy.log('login');
     cy.get(serverElements.digiteSeuEmail()).should('be.visible').type(email);
-    cy.get(serverElements.digiteSuaSenha).should('be.visible').type(password);
-    cy.xpath(serverElements.btnEnter()).should('be.visible').click();
+    cy.get(serverElements.digiteSuaSenha()).should('be.visible').type(password);
+    cy.get(serverElements.btnEnter()).should('be.visible').click();
   }
+
+  accessProductRegistrationPage(){
+    cy.log('access product registration');
+    cy.xpath(serverElements.cardCadastrarProdutos(), {timeout:6000}).should('be.visible');
+    cy.get(serverElements.btncadastrarProdutos()).should('be.visible').click();
+  }
+
+  productRegistration(){
+    cy.log('product registration');
+    const product = {
+      nome: faker.commerce.productName(),
+      preco: faker.number.int({ min: 10, max: 1000 }),
+      descricao: faker.commerce.productDescription(),
+      quantidade: faker.number.int({ min: 1, max: 100 }),
+    };
+    this.storageData.product = { ...product };
+    cy.xpath(serverElements.titleCadastroDeProdutos(), {timeout:6000})
+    .should('be.visible').then(()=>{
+      cy.get(serverElements.nomeDoProduto()).should('be.visible').type(product.nome);
+      cy.get(serverElements.preco()).should('be.visible').type(product.preco);
+      cy.get(serverElements.descricao()).should('be.visible').type(product.descricao);
+      cy.get(serverElements.quantidade()).should('be.visible').type(product.quantidade);
+      cy.get(serverElements.imagem()).should('be.visible').attachFile('image-test.jpeg');
+      cy.get(serverElements.btnCadastrarProdutoDescrito()).click({force:true});
+    });
+  }
+
+ validateProductList() {
+  cy.log('validate product list');
+  const expectedProduct = this.storageData.product;
+  const nomeEsperado = expectedProduct.nome.toLowerCase();
+  
+  cy.xpath(serverElements.titleListaDeProdutos(), { timeout: 6000 }).should('be.visible');
+  cy.get('tbody tr', { timeout: 6000 }).then(($rows) => {
+    const matchedRows = $rows.filter((index, row) => {
+      const nome = Cypress.$(row).find('td').eq(0).text().trim().toLowerCase();
+      cy.log(`logLinha: nome="${nome}"`);
+      return nome.includes(nomeEsperado);
+    });
+    if (matchedRows.length > 0) {
+      cy.log(`Product "${expectedProduct.nome}" found`);
+    } else {
+      cy.log(`Product "${expectedProduct.nome}" not found`);
+    }
+  });
 }
+
+
+
+
+}
+
 
 export default ServerRestPage;

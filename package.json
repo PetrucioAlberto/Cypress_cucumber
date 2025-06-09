@@ -6,6 +6,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^22.1.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "@faker-js/faker": "^9.8.0",
+    "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^2.0.1",
     "esbuild": "^0.25.5"
   }
