@@ -109,29 +109,48 @@ class ServerRestPage {
     });
   }
 
- validateProductList() {
-  cy.log('validate product list');
-  const expectedProduct = this.storageData.product;
-  const nomeEsperado = expectedProduct.nome.toLowerCase();
-  
-  cy.xpath(serverElements.titleListaDeProdutos(), { timeout: 6000 }).should('be.visible');
-  cy.get('tbody tr', { timeout: 6000 }).then(($rows) => {
-    const matchedRows = $rows.filter((index, row) => {
-      const nome = Cypress.$(row).find('td').eq(0).text().trim().toLowerCase();
-      cy.log(`logLinha: nome="${nome}"`);
-      return nome.includes(nomeEsperado);
+  validateProductList() {
+    cy.log('validate product list');
+    const expectedProduct = this.storageData.product;
+    const nomeEsperado = expectedProduct.nome.toLowerCase();
+
+    cy.xpath(serverElements.titleListaDeProdutos(), { timeout: 6000 }).should('be.visible');
+    cy.get('tbody tr', { timeout: 6000 }).then(($rows) => {
+      const matchedRows = $rows.filter((index, row) => {
+        const nome = Cypress.$(row).find('td').eq(0).text().trim().toLowerCase();
+        cy.log(`logLinha: nome="${nome}"`);
+        return nome.includes(nomeEsperado);
+      });
+      if (matchedRows.length > 0) {
+        cy.log(`Product "${expectedProduct.nome}" found`);
+      } else {
+        cy.log(`Product "${expectedProduct.nome}" not found`);
+      }
     });
-    if (matchedRows.length > 0) {
-      cy.log(`Product "${expectedProduct.nome}" found`);
-    } else {
-      cy.log(`Product "${expectedProduct.nome}" not found`);
-    }
-  });
-}
+  }
+  userEditingAndDeletionProcess(){
+    cy.log('user editing an deletion');
+    cy.xpath(serverElements.cardListarUser()).should('be.visible');
+    cy.get(serverElements.btnListarUser()).should('be.visible').click();
+    cy.xpath(serverElements.btnEditar()).should('be.visible');
+    cy.get(serverElements.btnExcluir()).should('be.visible').click();
+  }
+  accessHome(){
+    cy.log('home');
+    cy.get(serverElements.headHome(), {timeout:6000}).should('be.visible').click();
+  }
 
+  accessListingProductsPage(){
+    cy.log('access listing page products');
+    cy.xpath(serverElements.cardListarProdutos()).should('be.visible');
+    cy.get(serverElements.btnListarProdutos()).should('be.visible').click();
+  }
 
-
-
+  productEditingAndDeletionProcess(){
+    cy.log('product editing an deletion');
+    cy.xpath(serverElements.btnEditarProduto()).should('be.visible');
+    cy.get(serverElements.btnExcluir()).should('be.visible').click();
+  }
 }
 
 

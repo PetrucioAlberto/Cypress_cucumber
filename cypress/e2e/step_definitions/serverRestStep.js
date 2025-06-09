@@ -39,3 +39,15 @@ Then(`devo validar que o produto está presente na lista`, () => {
   serverest.validateProductList();
 });
 
+Then(`devo realizar o processo de edicao e exclusao de usuario`, () => {
+  serverest.userEditingAndDeletionProcess();
+});
+
+Then(`acesso a lista de produto`, () => {
+  serverest.accessHome();
+  serverest.accessListingProductsPage();
+});
+
+Then(`devo realizar o processo de edicao e exclusao de produto`, () => {
+  serverest.productEditingAndDeletionProcess();
+});

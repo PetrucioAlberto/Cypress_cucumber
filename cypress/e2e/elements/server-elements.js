@@ -41,8 +41,14 @@ class ServerElements {
   btnCadastrarProdutoDescrito(){return '[data-testid="cadastarProdutos"]'}
   //products list
   titleListaDeProdutos(){return "//h1[contains(text(),'Lista dos Produtos')]"}
+  btnEditarProduto(){return "//tbody/tr[1]/td[6]/div[1]/button[1]"}
 
-
+  //users list
+  btnEditar(){return "//tbody/tr[1]/td[5]/div[1]/button[1]"}
+  btnExcluir(){return 'tbody tr:first-child button.btn-danger'}
+  //header
+  headHome(){return '[data-testid="home"]'}
+  
 }
 
 export default ServerElements;
