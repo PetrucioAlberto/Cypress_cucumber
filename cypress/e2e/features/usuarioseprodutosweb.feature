@@ -13,7 +13,8 @@ Feature: Serverest - Gestao de Usuarios e Produtos
 
   Scenario Outline: Cadastro e consulta de produtos
     Given que acesso a homePage
-    When eu faço login com email e senha '<email>' '<password>'
+    And realizo o cadastro inicial de adm '<name>' '<email>' '<password>'
+    # When eu faço login com email e senha '<email>' '<password>'
     And acesso a página de cadastro de produtos
     And cadastro um produto com nome preco e descricao
     Then devo validar que o produto está presente na lista
@@ -24,7 +25,8 @@ Feature: Serverest - Gestao de Usuarios e Produtos
 
   Scenario Outline: Edicao e exclusao do usuario e produto
     Given que acesso a homePage
-    When eu faço login com email e senha '<email>' '<password>'
+    And realizo o cadastro inicial de adm '<name>' '<email>' '<password>'
+    # When eu faço login com email e senha '<email>' '<password>'
     Then devo realizar o processo de edicao e exclusao de usuario
     And acesso a lista de produto
     Then devo realizar o processo de edicao e exclusao de produto

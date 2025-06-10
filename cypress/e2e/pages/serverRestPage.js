@@ -142,8 +142,8 @@ class ServerRestPage {
 
   accessListingProductsPage(){
     cy.log('access listing page products');
-    cy.xpath(serverElements.cardListarProdutos()).should('be.visible');
-    cy.get(serverElements.btnListarProdutos()).should('be.visible').click();
+    cy.xpath(serverElements.cardListarProdutos(), {timeout:6000}).should('be.visible');
+    cy.get(serverElements.btnListarProdutos()).should('be.visible').click({force:true});
   }
 
   productEditingAndDeletionProcess(){
