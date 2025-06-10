@@ -8,7 +8,7 @@ Feature: Serverest - Gestao de Usuarios e Produtos
       | url                   | endpoint |
       | https://serverest.dev/| /usuarios|
 
-  Scenario Outline: Cadastrar usuarios
+  Scenario Outline: Cadastrar Produtos
     Given que acesso a api '<url>' 
     When realizo uma request para cadastrar o produto "<endpoint>"
     Then eu valido a resposta do cadastro de produto realizado
