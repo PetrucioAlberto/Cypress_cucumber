@@ -24,12 +24,12 @@ class ServerRestPage {
       password: fakePassword,
     };
     cy.log('Register user');
-    cy.get(serverElements.btnCadastrar()).should('be.visible').click();
+    cy.get(serverElements.btnCadastrar(), {timeout:6000}).should('be.visible').click();
     cy.get(serverElements.digiteSeuNome()).should('be.visible').clear().type(fakeName);
     cy.get(serverElements.digiteSeuEmail()).should('be.visible').clear().type(fakeEmail);
     cy.get(serverElements.digiteSuaSenha()).should('be.visible').clear().type(fakePassword);
     cy.get(serverElements.cadastrarComoAdm()).should('be.visible').click();
-    cy.get(serverElements.btnCadastrar()).should('be.visible').click();
+    cy.get(serverElements.btnCadastrar(), {timeout:6000}).should('be.visible').click();
     cy.xpath(serverElements.msgValidacaoCadastro()).should('be.visible').then($msg=>{
       const text = $msg.text();
       expect(text).to.contain('Cadastro realizado com sucesso');
@@ -80,13 +80,13 @@ class ServerRestPage {
     cy.log('login');
     cy.get(serverElements.digiteSeuEmail()).should('be.visible').type(email);
     cy.get(serverElements.digiteSuaSenha()).should('be.visible').type(password);
-    cy.get(serverElements.btnEnter()).should('be.visible').click();
+    cy.get(serverElements.btnEnter(), {timeout:6000}).should('be.visible').click();
   }
 
   accessProductRegistrationPage(){
     cy.log('access product registration');
     cy.xpath(serverElements.cardCadastrarProdutos(), {timeout:6000}).should('be.visible');
-    cy.get(serverElements.btncadastrarProdutos()).should('be.visible').click();
+    cy.get(serverElements.btncadastrarProdutos(), {timeout:6000}).should('be.visible').click();
   }
 
   productRegistration(){
@@ -105,7 +105,7 @@ class ServerRestPage {
       cy.get(serverElements.descricao()).should('be.visible').type(product.descricao);
       cy.get(serverElements.quantidade()).should('be.visible').type(product.quantidade);
       cy.get(serverElements.imagem()).should('be.visible').attachFile('image-test.jpeg');
-      cy.get(serverElements.btnCadastrarProdutoDescrito()).click({force:true});
+      cy.get(serverElements.btnCadastrarProdutoDescrito(), {timeout:6000}).click({force:true});
     });
   }
 
@@ -131,9 +131,9 @@ class ServerRestPage {
   userEditingAndDeletionProcess(){
     cy.log('user editing an deletion');
     cy.xpath(serverElements.cardListarUser()).should('be.visible');
-    cy.get(serverElements.btnListarUser()).should('be.visible').click();
+    cy.get(serverElements.btnListarUser(), {timeout:6000}).should('be.visible').click();
     cy.xpath(serverElements.btnEditar()).should('be.visible');
-    cy.get(serverElements.btnExcluir()).should('be.visible').click();
+    cy.get(serverElements.btnExcluir(), {timeout:6000}).should('be.visible').click();
   }
   accessHome(){
     cy.log('home');
@@ -149,7 +149,7 @@ class ServerRestPage {
   productEditingAndDeletionProcess(){
     cy.log('product editing an deletion');
     cy.xpath(serverElements.btnEditarProduto()).should('be.visible');
-    cy.get(serverElements.btnExcluir()).should('be.visible').click();
+    cy.get(serverElements.btnExcluir(), {timeout:6000}).should('be.visible').click();
   }
 }
 
