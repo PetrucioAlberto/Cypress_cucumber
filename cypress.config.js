@@ -5,8 +5,6 @@ const addCucumberPreprocessorPlugin = require('@badeball/cypress-cucumber-prepro
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "https://front.serverest.dev/login",
-    defaultCommandTimeout: 10000,
     specPattern: "cypress/e2e/features/**/*.feature",
     supportFile: "cypress/support/e2e.js",
     async setupNodeEvents(on, config) {
